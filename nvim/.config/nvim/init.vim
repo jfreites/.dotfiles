@@ -74,6 +74,7 @@ source ~/.config/nvim/plugins/nerdtree.vim
 source ~/.config/nvim/plugins/peekaboo.vim
 source ~/.config/nvim/plugins/phpactor.vim
 source ~/.config/nvim/plugins/surround.vim
+source ~/.config/nvim/plugins/telescope.vim
 
 "Plug 'https://github.com/ap/vim-css-color' " CSS Color Preview
 "Plug 'https://github.com/tc50cal/vim-terminal' " Vim Terminal

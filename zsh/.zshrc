@@ -1,9 +1,15 @@
+# Stuff which should be first {{{
+# ==============================================================================
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+
+  # ....
+# }}}
 
 # Plugins {{{
 # ==============================================================================
@@ -16,7 +22,6 @@ fi
 
     antibody bundle robbyrussell/oh-my-zsh
     #antibody bundle robbyrussell/oh-my-zsh path:plugins/adb
-    #antibody bundle robbyrussell/oh-my-zsh path:plugins/bower
     antibody bundle robbyrussell/oh-my-zsh path:plugins/composer
     antibody bundle robbyrussell/oh-my-zsh path:plugins/cp
     #antibody bundle robbyrussell/oh-my-zsh path:plugins/dnf
@@ -34,8 +39,6 @@ fi
     #antibody bundle robbyrussell/oh-my-zsh path:plugins/pass
     antibody bundle robbyrussell/oh-my-zsh path:plugins/rsync
     #antibody bundle robbyrussell/oh-my-zsh path:plugins/ssh-agent
-    #antibody bundle robbyrussell/oh-my-zsh path:plugins/tmux
-    #antibody bundle robbyrussell/oh-my-zsh path:plugins/tmuxinator
     antibody bundle robbyrussell/oh-my-zsh path:plugins/z
 
     # Other bundles
@@ -113,9 +116,6 @@ fi
     alias tinker="artisan tinker"
     alias serve="artisan serve"
     alias mfs="artisan migrate:fresh --seed"
-    #homestead() {
-    #    ( cd ~/Homestead && vagrant $* )
-    #}
 
     # Git
     alias g="git"
@@ -140,26 +140,9 @@ fi
     alias la="ls -la"
     alias lt="ls --tree"
     #alias mux="tmuxinator"
-    #alias copy="xclip -selection clipboard"
-    #alias paste="xclip -o -selection clipboard"
     #alias ag="sag"
     alias cat="bat"
-    #alias webcam="gphoto2 --stdout --capture-movie | ffmpeg -i - -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 /dev/video1"
 
-    # Open vim with z argument
-    #v() {
-    #  if [ -n "$1" ]; then
-    #    z $1
-    #  fi
-    #
-    #  nvim
-    #}
-
-    #cdls() {
-    #    cd $1 && eval ls
-    #}
-    #alias cd="cdls"
-    
     open () {
         xdg-open $* > /dev/null 2>&1
     }
@@ -174,15 +157,18 @@ fi
 # Interactive shell startup scripts {{{
 # ==============================================================================
 
-    #if [[ $- == *i* && $0 == '/bin/zsh' ]]; then
-    #   source ~/.config/my_scripts/login.sh
-    #fi
+# TBD
+
+# }}}
+
+# Other configurations for addons {{{
+# ==============================================================================
+
+    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+    # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+    [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # }}}
 
 # vim: set nospell foldmethod=marker foldlevel=0:
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

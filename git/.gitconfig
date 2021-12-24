@@ -1,0 +1,7 @@
+[color]
+	ui = true
+[user]
+	name = Jonathan Freites
+	email = jonathanfreites@gmail.com
+[init]
+	defaultBranch = main
