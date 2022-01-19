@@ -1,5 +1,13 @@
-# Stuff which should be first {{{
-# ==============================================================================
+#  ______ _____ _   _                    __ _       
+# |___  //  ___| | | |                  / _(_)      
+#    / / \ `--.| |_| |   ___ ___  _ __ | |_ _  __ _ 
+#   / /   `--. \  _  |  / __/ _ \| '_ \|  _| |/ _` |
+# ./ /___/\__/ / | | | | (_| (_) | | | | | | | (_| |
+# \_____/\____/\_| |_/  \___\___/|_| |_|_| |_|\__, |
+#                                              __/ |
+#                                             |___/ 
+
+# Personal zsh config file
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -8,167 +16,104 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-  # ....
-# }}}
 
-# Plugins {{{
-# ==============================================================================
+autoload -Uz compinit
+compinit
 
-    # Load the Antibody plugin manager for zsh.
-    source <(antibody init)
+# Load the Antibody plugin manager for zsh.
+source ~/.zsh_plugins.sh
 
-    # Setup required env var for oh-my-zsh plugins
-    export ZSH="$(antibody home)/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
+# Configuration
 
-    antibody bundle robbyrussell/oh-my-zsh
-    #antibody bundle robbyrussell/oh-my-zsh path:plugins/adb
-    antibody bundle robbyrussell/oh-my-zsh path:plugins/composer
-    antibody bundle robbyrussell/oh-my-zsh path:plugins/cp
-    #antibody bundle robbyrussell/oh-my-zsh path:plugins/dnf
-    antibody bundle robbyrussell/oh-my-zsh path:plugins/docker
-    antibody bundle robbyrussell/oh-my-zsh path:plugins/docker-compose
-    antibody bundle robbyrussell/oh-my-zsh path:plugins/git
-    antibody bundle robbyrussell/oh-my-zsh path:plugins/git-flow
-    antibody bundle robbyrussell/oh-my-zsh path:plugins/gpg-agent
-    antibody bundle robbyrussell/oh-my-zsh path:plugins/gulp
-    antibody bundle robbyrussell/oh-my-zsh path:plugins/httpie
-    antibody bundle robbyrussell/oh-my-zsh path:plugins/jsontools
-    antibody bundle robbyrussell/oh-my-zsh path:plugins/jump
-    antibody bundle robbyrussell/oh-my-zsh path:plugins/nmap
-    antibody bundle robbyrussell/oh-my-zsh path:plugins/npm
-    #antibody bundle robbyrussell/oh-my-zsh path:plugins/pass
-    antibody bundle robbyrussell/oh-my-zsh path:plugins/rsync
-    #antibody bundle robbyrussell/oh-my-zsh path:plugins/ssh-agent
-    antibody bundle robbyrussell/oh-my-zsh path:plugins/z
+HYPHEN_INSENSITIVE="true"
+ENABLE_CORRECTION="false"
+COMPLETION_WAITING_DOTS="true"
+HIST_STAMPS="yyyy-mm-dd"
 
-    # Other bundles
-    antibody bundle sampson-chen/sack
-    #antibody bundle jessarcher/zsh-artisan
-    #antibody bundle /home/jess/.oh-my-zsh/custom/plugins/artisan
-    antibody bundle zsh-users/zsh-autosuggestions
-    antibody bundle zsh-users/zsh-completions
-    antibody bundle romkatv/powerlevel10k
+typeset -U path cdpath fpath
 
-    # This needs to be the last bundle.
-    antibody bundle zsh-users/zsh-syntax-highlighting
+# Vim mode
+bindkey -v
+export KEYTIMEOUT=1
 
-    # Load the theme.
-    # antibody bundle robbyrussell/oh-my-zsh path:themes/robbyrussell.zsh-theme
-    antibody bundle dracula/zsh
+#export ANDROID_HOME="$HOME/Android/Sdk/"
 
-# }}}
+export GIT_EDITOR=nvim
 
-# Configuration {{{
-# ==============================================================================
+path=(
+#     $HOME/.local/bin
+#     $HOME/.bin
+     $HOME/bin
+#     $HOME/.composer/vendor/bin
+#     $HOME/.go/bin
+#     ./vendor/bin
+#     ${ANDROID_HOME}tools/
+#     ${ANDROID_HOME}platform-tools/
+$HOME/.emacs.d/bin 
+$path
+)
 
-    HYPHEN_INSENSITIVE="true"
-    ENABLE_CORRECTION="false"
-    COMPLETION_WAITING_DOTS="true"
-    HIST_STAMPS="yyyy-mm-dd"
+setopt auto_cd
+cdpath=(
+    $HOME/Batcave
+)
 
-    typeset -U path cdpath fpath
-
-    # Vim mode
-    bindkey -v
-    export KEYTIMEOUT=1
-
-    #export ANDROID_HOME="$HOME/Android/Sdk/"
-
-    export GIT_EDITOR=vim
-
-    path=(
-   #     $HOME/.local/bin
-   #     $HOME/.bin
-   #     $HOME/bin
-   #     $HOME/.composer/vendor/bin
-   #     $HOME/.go/bin
-   #     ./vendor/bin
-   #     ${ANDROID_HOME}tools/
-   #     ${ANDROID_HOME}platform-tools/
-        $path
-    )
-
-    setopt auto_cd
-    cdpath=(
-        $HOME/Batcave
-    )
-
-    zstyle ':completion:*' group-name ''
-    zstyle ':completion:*:descriptions' format %d
-    zstyle ':completion:*:descriptions' format %B%d%b
-    zstyle ':completion:*:complete:(cd|pushd):*' tag-order \
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format %d
+zstyle ':completion:*:descriptions' format %B%d%b
+zstyle ':completion:*:complete:(cd|pushd):*' tag-order \
             'local-directories named-directories'
 
-    export EDITOR='vim'
-    export NVIM_LISTEN_ADDRESS='/tmp/nvimsocket'
-    export ARTISAN_OPEN_ON_MAKE_EDITOR='nvr'
-    export FZF_DEFAULT_COMMAND='ag -u -g ""'
+export EDITOR='nvim'
+#export NVIM_LISTEN_ADDRESS='/tmp/nvimsocket'
 
-    unsetopt sharehistory
+# FZF
+export FZF_DEFAULT_COMMAND="rg --files --hidden --glob '!.git'"
+export FZF_DEAFULT_OPTS="--height=40% --layout=reverse --border --margin=1 --padding=1"
 
-# }}}
+#unsetopt sharehistory
 
-# Aliases & Functions {{{
-# ==============================================================================
+# Bundle zsh plugins via antibody
+alias update-antibody='antibody bundle < $HOME/.zsh_plugins.txt > $HOME/.zsh_plugins.sh'
 
-    # Laravel
-    alias a="artisan"
-    alias tinker="artisan tinker"
-    alias serve="artisan serve"
-    alias mfs="artisan migrate:fresh --seed"
+# Homebrew alias for daily managment
+alias brewup='brew update; brew upgrade; brew cleanup; brew doctor'
 
-    # Git
-    alias g="git"
-    alias gs="git s"
-    alias nah="git reset --hard;git clean -df"
-    alias co="git checkout"
+# Open nvim config everywhere
+alias nvimrc='nvim ${HOME}/.config/nvim/init.vim'
 
-    # Docker
-    alias d="docker"
-    alias dc="docker-compose"
-    alias dce="docker-compose exec"
-    alias dcea="docker-compose exec app"
-    dceas () {
-        docker-compose exec app su app -c "$*"
-    }
-    alias dceasa="dceas php artisan"
+# Git
+alias g="git"
+alias gs="git s"
+alias nah="git reset --hard;git clean -df"
+alias co="git checkout"
 
-    # General
-    alias vim="nvim"
-    alias ls="lsd"
-    alias l="ls -l"
-    alias la="ls -la"
-    alias lt="ls --tree"
-    #alias mux="tmuxinator"
-    #alias ag="sag"
-    alias cat="bat"
+# DDEV
+alias ddc="ddev describe"
+alias dds="ddev start"
+alias ddp='ddev pause'
 
-    open () {
-        xdg-open $* > /dev/null 2>&1
-    }
+# General
+alias vim="nvim"
+alias ls="lsd"
+alias l="ls -l"
+alias la="ls -la"
+alias lt="ls --tree"
+alias cat="bat"
 
-    if (( $+commands[tag] )); then
-        tag() { command tag "$@"; source ${TAG_ALIAS_FILE:-/tmp/tag_aliases} 2>/dev/null }
-        alias ag=tag
-    fi
+# cd to directory then ls -l
+cdd() { builtin cd "$@" && l; }
 
-# }}}
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Interactive shell startup scripts {{{
-# ==============================================================================
+# Fix error: Console output during zsh initialization detected.
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
-# TBD
+# Source fuzzy finder
+#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# }}}
-
-# Other configurations for addons {{{
-# ==============================================================================
-
-    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-    # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-    [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# }}}
+export BAT_THEME="gruvbox-dark"
 
 # vim: set nospell foldmethod=marker foldlevel=0:
+export PATH="/opt/homebrew/opt/node@16/bin:$PATH"

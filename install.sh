@@ -18,6 +18,7 @@ brew tap homebrew/cask
 
 PACKAGES=(
     git
+    antibody
     bat
     lsd
     httpie
@@ -72,9 +73,10 @@ stow nvim
 stow zsh
 stow kitty
 
-# use brew zsh as default shell
+# TODO use brew zsh as default shell
 
 # bundle zsh plugins
+antibody bundle < ~/.zsh_plugins.txt > ~/.zsh_plugins.sh
 
 # install neovim plugins
 nvim --headless +PlugInstall +qall

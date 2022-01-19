@@ -20,11 +20,9 @@
 set expandtab
 set title
 set nowrap
-set scrolloff=8
-" set spell
+set scrolloff=999
 set hidden
-" set termguicolors
-set undofile
+set termguicolors
 set ignorecase
 set smartcase
 set list
@@ -36,10 +34,15 @@ set tabstop=4
 set shiftwidth=4
 set smarttab
 set softtabstop=4
+set noswapfile
+set nobackup
+set undodir=~/.config/nvim/undodir
+set undofile
+set splitbelow
+set splitright
 set mouse=a
 set updatetime=300 " Reduce time for highlighting other references
 set redrawtime=10000 " Allow more time for loading syntax on large files
-
 set encoding=UTF-8
 
 " --
@@ -48,19 +51,18 @@ set encoding=UTF-8
 
 let mapleader = "\<space>"
 
+inoremap <C-c> <esc>
+
+nnoremap <Leader><CR> :so ~/.config/nvim/init.vim<CR>
+
 " Quicky scape in normal mode
 imap jj <esc>
 
-
+" --
 " Plugins setup
+" --
 
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-call plug#begin(data_dir . '/plugins')
+call plug#begin('~/.config/nvim/plugged')
 
 source ~/.config/nvim/plugins/airline.vim
 source ~/.config/nvim/plugins/coc.vim
@@ -75,6 +77,7 @@ source ~/.config/nvim/plugins/peekaboo.vim
 source ~/.config/nvim/plugins/phpactor.vim
 source ~/.config/nvim/plugins/surround.vim
 source ~/.config/nvim/plugins/telescope.vim
+source ~/.config/nvim/plugins/whichkey.vim
 
 "Plug 'https://github.com/ap/vim-css-color' " CSS Color Preview
 "Plug 'https://github.com/tc50cal/vim-terminal' " Vim Terminal
@@ -86,9 +89,19 @@ call plug#end()
 
 doautocmd User PlugLoaded
 
+"let g:lightline = {}
+"let g:lightline.colorscheme = 'gruvbox'
+
 "--------------------------------------------------------------------------
 " Miscellaneous
 "--------------------------------------------------------------------------
+
+" Disable python2 from checkhealth
+let g:loaded_python_provider = 0
+let g:python_host_prog = ''
+
+" Ruby current version
+let g:ruby_host_prog = '~/rvm/rubies/ruby-3.0.3/bin/ruby'
 
 augroup FileTypeOverrides
     autocmd!
